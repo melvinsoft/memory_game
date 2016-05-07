@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, Boolean
+from xblock.fields import Scope, Integer, Boolean, Float
 from xblock.fragment import Fragment
 
 
@@ -41,8 +41,8 @@ class MemoryGameXBlock(XBlock):
     )
 
     weight = Float(
-        display_name=_("Weight"),
-        help=_("The maximum score the learner can receive for the problem"),
+        display_name="Weight",
+        help="The maximum score the learner can receive for the problem",
         scope=Scope.settings,
         default=1,
     )
