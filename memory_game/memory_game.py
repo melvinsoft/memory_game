@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer
+from xblock.fields import Scope, Integer, Boolean
 from xblock.fragment import Fragment
 
 
@@ -17,14 +17,39 @@ class MemoryGameXBlock(XBlock):
 
     # TO-DO: delete count, and define your own fields.
     count = Integer(
-        default=0, scope=Scope.user_state,
+        default=0,
+        scope=Scope.user_state,
         help="A simple counter, to show something happening",
     )
 
     attempts = Integer(
-        default=0, scope=Scope.user_state,
+        default=0,
+        scope=Scope.user_state,
         help="Counter for the user attempts, if a max is setted, not could be greather than this value"
     )
+
+    users_win_count = Integer(
+        default=0,
+        scope=Scope.user_state_summary,
+        help="A counter for how many users have won this game in the course"
+    )
+
+    has_won = Boolean(
+        default=0,
+        scope=Scope.user_state,
+        help="Has this student already won the game?"
+    )
+
+    weight = Float(
+        display_name=_("Weight"),
+        help=_("The maximum score the learner can receive for the problem"),
+        scope=Scope.settings,
+        default=1,
+    )
+
+    # XBlock settings
+    block_settings_key = 'memory-game'
+    has_score = True
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -79,6 +104,23 @@ class MemoryGameXBlock(XBlock):
         if data['increment_attms'] == '1':
             self.attempts += 1
         return {"attempts": self.attempts}
+
+    @XBlock.json_handler
+    def user_wins(self, data, suffix=''):
+        """
+        When the backbone app detect that all card where matched send a true
+        to this handler to check that the user has won.
+        """
+        self.users_win_count += 1
+        self.has_won = True
+        self.runtime.publish(
+            self, "grade", {
+                value: 1.0, max_value: 1.0
+            }
+        )
+
+        return {"win_status_msg": "YOU WIN!!!"}
+
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

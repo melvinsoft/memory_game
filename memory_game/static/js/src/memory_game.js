@@ -1,21 +1,8 @@
 /* Javascript for MemoryGameXBlock. */
 function MemoryGameXBlock(runtime, element) {
 
-    function updateCount(result) {
-        $('.count', element).text(result.count);
-    }
-
-    var handlerUrl = runtime.handlerUrl(element, 'increment_count');
     var incrementAttmsUrl = runtime.handlerUrl(element, 'increment_attempts');
-
-    $('p', element).click(function(eventObject) {
-        $.ajax({
-            type: "POST",
-            url: handlerUrl,
-            data: JSON.stringify({"hello": "world"}),
-            success: updateCount
-        });
-    });
+    var userWinsUrl = runtime.handlerUrl(element, 'user_wins');
 
     incrementAttempts = function() {
         $.ajax({
@@ -24,6 +11,20 @@ function MemoryGameXBlock(runtime, element) {
             data: JSON.stringify({"increment_attms": "1"}),
             success: function (result) {
                 $('.attempts_counter', element).text(result.attempts);
+            },
+            error: function(){
+                alert("increment_attms error!");
+            }
+        });
+    }
+
+    user_wins = function() {
+        $.ajax({
+            type: 'POST',
+            url: userWinsUrl,
+            data: JSON.stringify({"win": "1"}),
+            success: function (result) {
+                $('.win_status', element).text(result.win_status_msg);
             },
             error: function(){
                 alert("increment_attms error!");

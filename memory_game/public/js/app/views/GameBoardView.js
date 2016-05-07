@@ -43,14 +43,20 @@ define(function(require) {
                     //console.log("flippedCards[0].get(value): " + flippedCards[0].get("value")); // TEMP
                     //console.log("flippedCards[1].get(value): " + flippedCards[1].get("value")); // TEMP
                     if(flippedCards[0].get("value")  == flippedCards[1].get("value")) {
-                        //console.log("matched two cards");
                         setTimeout(function() {
                             flippedCards[0].set("matched", true);
                             flippedCards[1].set("matched", true);
                             that.model.set("cardsClicked", 0);
                             that.model.set("isMatching", false);
+                            // check if the user has won
+                            if (that.model.get("cardSet").where({matched: true}).length == that.model.get("cardSet").length) {
+                                user_wins();
+                            }
                         }, 400);
+
+
                     } else {
+
                         incrementAttempts();
                         setTimeout(function() {
                             flippedCards[0].set("flipped", false);
