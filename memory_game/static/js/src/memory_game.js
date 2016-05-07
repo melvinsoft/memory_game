@@ -4,7 +4,7 @@ function MemoryGameXBlock(runtime, element) {
     function updateCount(result) {
         $('.count', element).text(result.count);
     }
-    console.info(element);
+
     var handlerUrl = runtime.handlerUrl(element, 'increment_count');
     var incrementAttmsUrl = runtime.handlerUrl(element, 'increment_attempts');
 
