@@ -1,0 +1,9 @@
+/* CSS for MemoryGameXBlock */
+
+.memory_game_block .count {
+    font-weight: bold;
+}
+
+.memory_game_block p {
+    cursor: pointer;
+}
