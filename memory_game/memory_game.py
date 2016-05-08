@@ -119,15 +119,16 @@ class MemoryGameXBlock(XBlock):
         Returns: the username if it can be identified. If the xblock service to converts to a real user
             fails, returns None and logs the error.
         """
-        if hasattr(self, "xmodule_runtime" and self.xmodule_runtime.anonymous_student_id):
-            user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
-            if user:
-                return user.username
-            else:
-                logger.exception(
-                    "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
-                )
-                return None
+        if hasattr(self, "xmodule_runtime"):
+            if self.xmodule_runtime.anonymous_student_id:
+                user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
+                if user:
+                    return user.username
+                else:
+                    logger.exception(
+                        "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
+                    )
+                    return None
 
     @property
     def get_course(self):
@@ -205,7 +206,7 @@ class MemoryGameXBlock(XBlock):
         the game and grade is cero.
         """
 
-        if self.flips >= self.max_flips:
+        if self.max_flips > 0 and self.flips >= self.max_flips:
             # the student loose =(
             self.runtime.publish(
                 self, "grade", {
@@ -225,7 +226,6 @@ class MemoryGameXBlock(XBlock):
         to this handler to check that the user has won.
         """
         self.users_win_count += 1
-
 
         if not self.has_won:
             self.runtime.publish(
