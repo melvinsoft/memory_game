@@ -111,22 +111,23 @@ class MemoryGameXBlock(XBlock):
             return unicode(key)
 
     @property
-    def get_user(self):
-        if hasattr(self, "xmodule_runtime"):
-            user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
-            if user:
-                return user
-            else:
-                return False
-        else:
-            return False
-
-    @property
     def get_username(self):
-        if self.get_user:
-            return self.get_user.username
-        else:
-            return 'No user avalaible'
+        """
+        Return the username of the user associated with anonymous_user_id
+        Args:
+            anonymous_user_id (str): the anonymous user id of the user
+        Returns: the username if it can be identified. If the xblock service to converts to a real user
+            fails, returns None and logs the error.
+        """
+        if hasattr(self, "xmodule_runtime"):
+            user = self.xmodule_runtime.get_real_user(anonymous_user_id)
+            if user:
+                return user.username
+            else:
+                logger.exception(
+                    "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
+                )
+                return None
 
     @property
     def get_course(self):
