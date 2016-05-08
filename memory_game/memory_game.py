@@ -30,7 +30,7 @@ class MemoryGameXBlock(XBlock):
     )
 
     max_flips = Integer(
-        default=10,
+        default=0,
         scope=Scope.user_state,
         help="""
             Limit the maximum of flips for the user, take care that not set it
