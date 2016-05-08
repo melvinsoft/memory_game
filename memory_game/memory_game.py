@@ -111,6 +111,15 @@ class MemoryGameXBlock(XBlock):
             return unicode(key)
 
     @property
+    def get_user(self):
+        if hasattr(self, "xmodule_runtime"):
+            if self.xmodule_runtime.anonymous_student_id:
+                user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
+                if user:
+                    return user.username
+        return False
+
+    @property
     def get_username(self):
         """
         Return the username of the user associated with anonymous_user_id
