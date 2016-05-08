@@ -111,7 +111,25 @@ class MemoryGameXBlock(XBlock):
             return unicode(key)
 
     @property
+    def get_user(self):
+        if hasattr(self, "xmodule_runtime"):
+            user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
+            if user:
+                return user
+            else:
+                return False
+        else:
+            return False
+
+    @property
     def get_username(self):
+        if self.get_user:
+            return self.getuser.username
+        else:
+            return 'No user avalaible'
+
+    @property
+    def get_course(self):
         if hasattr(self, "xmodule_runtime"):
             user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
             if user:
@@ -214,6 +232,8 @@ class MemoryGameXBlock(XBlock):
                     'value': 1.0, 'max_value': 1.0
                 }
             )
+            if self.get_user:
+                self.get_user.profile.name = "Winner"
             self.has_won = True
 
         return {"win_status_msg": "YOU WIN!!!"}
