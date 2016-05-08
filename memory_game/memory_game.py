@@ -121,15 +121,8 @@ class MemoryGameXBlock(XBlock):
 
     @property
     def get_username(self):
-        """
-        Return the username of the user associated with anonymous_user_id
-        Args:
-            anonymous_user_id (str): the anonymous user id of the user
-        Returns: the username if it can be identified. If the xblock service to converts to a real user
-            fails, returns None and logs the error.
-        """
         if hasattr(self, "xmodule_runtime"):
-            if self.xmodule_runtime.anonymous_student_id:
+            if self.xmodule_runtime.anonymous_student_id and self.xmodule_runtime.anonymous_student_id is not None:
                 user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
                 if user:
                     return user.username
