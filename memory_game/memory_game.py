@@ -112,12 +112,15 @@ class MemoryGameXBlock(XBlock):
         to this handler to check that the user has won.
         """
         self.users_win_count += 1
-        self.has_won = True
-        self.runtime.publish(
-            self, "grade", {
-                value: 1.0, max_value: 1.0
-            }
-        )
+
+
+        if not self.has_won:
+            self.runtime.publish(
+                self, "grade", {
+                    value: 1.0, max_value: 1.0
+                }
+            )
+            self.has_won = True
 
         return {"win_status_msg": "YOU WIN!!!"}
 
