@@ -117,10 +117,9 @@ class MemoryGameXBlock(XBlock):
             if user:
                 return user.username
             else:
-                logger.exception(
-                    "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
-                )
                 return 'No username'
+        else:
+            return 'Nop xmodule_runtime'
 
     def student_view(self, context=None):
         """
