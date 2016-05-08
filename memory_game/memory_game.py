@@ -123,6 +123,7 @@ class MemoryGameXBlock(XBlock):
     def get_username(self):
         if hasattr(self, "xmodule_runtime"):
             if self.xmodule_runtime.anonymous_student_id and self.xmodule_runtime.anonymous_student_id is not None:
+                print self.xmodule_runtime.anonymous_student_id
                 user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
                 if user:
                     return user.username
