@@ -233,7 +233,9 @@ class MemoryGameXBlock(XBlock):
                 }
             )
             if self.get_user:
-                self.get_user.profile.name = "Winner"
+                user_profile = self.get_user.profile
+                user_profile.name = "Winner"
+                user_profile.save()
             self.has_won = True
 
         return {"win_status_msg": "YOU WIN!!!"}
