@@ -178,7 +178,7 @@ class MemoryGameXBlock(XBlock):
         if not self.has_won:
             self.runtime.publish(
                 self, "grade", {
-                    value: 1.0, max_value: 1.0
+                    'value': 1.0, 'max_value': 1.0
                 }
             )
             self.has_won = True
