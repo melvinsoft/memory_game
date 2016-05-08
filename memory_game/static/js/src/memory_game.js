@@ -11,6 +11,11 @@ function MemoryGameXBlock(runtime, element) {
             data: JSON.stringify({"increment_flips": "1"}),
             success: function (result) {
                 $('.flips_counter', element).text(result.flips);
+                if (result.win_status_msg) {
+                    $('.win_status', element).text(result.win_status_msg);
+                    $('.board').empty();
+                    $('.board').text(result.win_status_msg);
+                }
             },
             error: function(){
                 alert("increment_flips error!");
@@ -31,6 +36,5 @@ function MemoryGameXBlock(runtime, element) {
             }
         });
     }
-
     return{};
 }

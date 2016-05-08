@@ -12,29 +12,30 @@ class MemoryGameXBlock(XBlock):
     TO-DO: document what your XBlock does.
     """
 
-    # Fields are defined on the class.  You can access them in your code as
-    # self.<fieldname>.
-
-    # TO-DO: delete count, and define your own fields.
-
-
     display_name = String(
         display_name="Display Name",
         default="Memory Game",
         scope=Scope.settings,
-        help="This name appears in the horizontal navigation at the top of the page."
+        help="""This name appears in the horizontal navigation at the top of
+                the page.
+             """
     )
 
     flips = Integer(
         default=0,
         scope=Scope.user_state,
-        help="Counter for the user flips, if a max is setted, not could be greather than this value"
+        help="""
+            Counter for the user flips, if a max is setted, not could be greather than this value
+             """
     )
 
     max_flips = Integer(
-        default=0,
+        default=10,
         scope=Scope.user_state,
-        help="Limit the maximum of flips for the user, take care that not set it too low"
+        help="""
+            Limit the maximum of flips for the user, take care that not set it
+            too low, for unlimited flips, leave zero.
+             """
     )
 
     users_win_count = Integer(
@@ -82,7 +83,13 @@ class MemoryGameXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
-    # TO-DO: change this view to display your data your own way.
+    @property
+    def get_max_flips(self):
+        if self.max_flips == 0:
+            return "Unlimited"
+        else:
+            return str(self.max_flips)
+
     def student_view(self, context=None):
         """
         The primary view of the MemoryGameXBlock, shown to students
@@ -133,24 +140,32 @@ class MemoryGameXBlock(XBlock):
     def studio_submit(self, data, suffix=''):
         self.display_name = data['display_name']
         self.weight = data['weight']
+        self.max_flips = data['max_flips']
 
         return {
             'result': 'success',
         }
 
-    # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all.
-
     @XBlock.json_handler
     def increment_flips(self, data, suffix=''):
         """
         After fip two cards with no match, the flips counter is incremented
-        by this handler.
+        by this handler. If a max_flips is set, and the user reach it, it loose
+        the game and grade is cero.
         """
 
-        if data['increment_flips'] == '1':
-            self.flips += 1
-        return {"flips": self.flips}
+        if self.flips >= self.max_flips:
+            # the student loose =(
+            self.runtime.publish(
+                self, "grade", {
+                    'value': 0, 'max_value': 1.0
+                }
+            )
+            return {"win_status_msg": "YOU LOOSE!!!", "flips": self.flips}
+        else:
+            if data['increment_flips'] == '1':
+                self.flips += 1
+            return {"flips": self.flips}
 
     @XBlock.json_handler
     def user_wins(self, data, suffix=''):
