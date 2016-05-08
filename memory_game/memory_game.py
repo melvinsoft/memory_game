@@ -5,7 +5,7 @@ import pkg_resources
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, Boolean, Float, String
 from xblock.fragment import Fragment
-
+from django.template import Context, Template
 
 class MemoryGameXBlock(XBlock):
     """
@@ -64,6 +64,23 @@ class MemoryGameXBlock(XBlock):
     block_settings_key = 'memory-game'
     has_score = True
 
+    '''
+    Util functions
+    '''
+    def load_resource(self, resource_path):
+        """
+        Gets the content of a resource
+        """
+        resource_content = pkg_resources.resource_string(__name__, resource_path)
+        return resource_content.decode("utf8")
+
+    def render_template(self, template_path, context={}):
+        """
+        Evaluate a template by resource path, applying the provided context
+        """
+        template_str = self.load_resource(template_path)
+        return Template(template_str).render(Context(context))
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -107,9 +124,11 @@ class MemoryGameXBlock(XBlock):
             'help_texts': help_texts,
             'self': self,
         }
+
         html = self.render_template('static/html/memory_game_edit.html', context)
 
         frag = Fragment(html)
+
         frag.add_javascript(self.load_resource("static/js/src/memory_game_edit.js"))
         frag.initialize_js('MemoryGameEditXBlock')
         return frag
