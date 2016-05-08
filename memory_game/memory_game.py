@@ -120,7 +120,7 @@ class MemoryGameXBlock(XBlock):
             fails, returns None and logs the error.
         """
         if hasattr(self, "xmodule_runtime"):
-            user = self.xmodule_runtime.get_real_user(anonymous_user_id)
+            user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
             if user:
                 return user.username
             else:
