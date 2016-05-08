@@ -7,7 +7,6 @@ memory_game/public/package.json
 memory_game/public/css/.DS_Store
 memory_game/public/css/main.css
 memory_game/public/css/normalize.css
-memory_game/public/html/memory_game.html
 memory_game/public/images/8-bit.jpeg
 memory_game/public/images/bargs.jpeg
 memory_game/public/images/bat.svg.png
@@ -854,8 +853,10 @@ memory_game/static/README.txt
 memory_game/static/css/.DS_Store
 memory_game/static/css/memory_game.css
 memory_game/static/html/memory_game.html
+memory_game/static/html/memory_game_edit.html
 memory_game/static/js/.DS_Store
 memory_game/static/js/src/memory_game.js
+memory_game/static/js/src/memory_game_edit.js
 memory_game_xblock.egg-info/PKG-INFO
 memory_game_xblock.egg-info/SOURCES.txt
 memory_game_xblock.egg-info/dependency_links.txt

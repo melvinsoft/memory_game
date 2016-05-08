@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, Boolean, Float
+from xblock.fields import Scope, Integer, Boolean, Float, String
 from xblock.fragment import Fragment
 
 
@@ -22,10 +22,23 @@ class MemoryGameXBlock(XBlock):
         help="A simple counter, to show something happening",
     )
 
+    display_name = String(
+        display_name="Display Name",
+        default="Memory Game",
+        scope=Scope.settings,
+        help="This name appears in the horizontal navigation at the top of the page."
+    )
+
     attempts = Integer(
         default=0,
         scope=Scope.user_state,
         help="Counter for the user attempts, if a max is setted, not could be greather than this value"
+    )
+
+    max_attempts = Integer(
+        default=0,
+        scope=Scope.user_state,
+        help="Limit the maximum of attempts for the user, take care that not set it too low"
     )
 
     users_win_count = Integer(
@@ -80,6 +93,35 @@ class MemoryGameXBlock(XBlock):
         frag.add_javascript(self.resource_string("static/js/src/memory_game.js"))
         frag.initialize_js('MemoryGameXBlock')
         return frag
+
+    def studio_view(self, context):
+        """
+        Editing view in Studio
+        """
+
+        help_texts = {
+            field_name: field.help
+            for field_name, field in self.fields.viewitems() if hasattr(field, "help")
+        }
+        context = {
+            'help_texts': help_texts,
+            'self': self,
+        }
+        html = self.render_template('static/html/memory_game_edit.html', context)
+
+        frag = Fragment(html)
+        frag.add_javascript(self.load_resource("static/js/src/memory_game_edit.js"))
+        frag.initialize_js('MemoryGameEditXBlock')
+        return frag
+
+    @XBlock.json_handler
+    def studio_submit(self, data, suffix=''):
+        self.display_name = data['display_name']
+        self.weight = data['weight']
+
+        return {
+            'result': 'success',
+        }
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
