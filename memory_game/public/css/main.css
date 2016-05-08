@@ -11,29 +11,29 @@
   height 100px;
 }*/
 
-#main li {
+#main-game li {
   display: inline;
   padding: 0 10px 0 10px;
 }
 
-#main a, #main a:visited, #main a:hover, #main a:active {
+#main-game a, #main-game a:visited, #main-game a:hover, #main-game a:active {
   color: inherit;
   text-decoration: none;
 }
 
 @media (max-width: 500px) {
-  #main h1 {
+  #main-game h1 {
     margin-top: 0;
     font-size: 14px;
   }
 
-  #main li {
+  #main-game li {
     display: block;
     padding: 5px;
   }
 }
 
-#main {
+#main-game {
     width: 500px;
     margin: 0 auto;
 }
