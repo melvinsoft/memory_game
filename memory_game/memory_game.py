@@ -113,14 +113,14 @@ class MemoryGameXBlock(XBlock):
     @property
     def get_username(self):
         if hasattr(self, "xmodule_runtime"):
-            user = self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id)
+            user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
             if user:
                 return user.username
             else:
                 logger.exception(
                     "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
                 )
-                return None
+                return 'No username'
 
     def student_view(self, context=None):
         """
