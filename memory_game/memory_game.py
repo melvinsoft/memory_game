@@ -90,11 +90,50 @@ class MemoryGameXBlock(XBlock):
         else:
             return str(self.max_flips)
 
+    @property
+    def student_id(self):
+        if hasattr(self, "xmodule_runtime"):
+            return self.xmodule_runtime.anonymous_student_id
+        else:
+            return "no course id"
+
+    @property
+    def course_id(self):
+        if hasattr(self, "xmodule_runtime"):
+            return self._serialize_opaque_key(self.xmodule_runtime.course_id)
+        else:
+            return "no course id"
+
+    # def _serialize_opaque_key(self, key):
+    #     if hasattr(key, 'to_deprecated_string'):
+    #         return key.to_deprecated_string()
+    #     else:
+    #         return unicode(key)
+    #
+    # def get_username(self, anonymous_user_id):
+    #     """
+    #     Return the username of the user associated with anonymous_user_id
+    #     Args:
+    #         anonymous_user_id (str): the anonymous user id of the user
+    #     Returns: the username if it can be identified. If the xblock service to converts to a real user
+    #         fails, returns None and logs the error.
+    #     """
+    #     if hasattr(self, "xmodule_runtime"):
+    #         user = self.xmodule_runtime.get_real_user(anonymous_user_id)
+    #         if user:
+    #             return user.username
+    #         else:
+    #             logger.exception(
+    #                 "XBlock service could not find user for anonymous_user_id '{}'".format(anonymous_user_id)
+    #             )
+    #             return None
+
     def student_view(self, context=None):
         """
         The primary view of the MemoryGameXBlock, shown to students
         when viewing courses.
         """
+
         html = self.resource_string("static/html/memory_game.html")
         frag = Fragment(html.format(self=self))
 
