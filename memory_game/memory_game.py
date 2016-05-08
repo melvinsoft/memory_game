@@ -104,12 +104,12 @@ class MemoryGameXBlock(XBlock):
         else:
             return "no course id"
 
-    # def _serialize_opaque_key(self, key):
-    #     if hasattr(key, 'to_deprecated_string'):
-    #         return key.to_deprecated_string()
-    #     else:
-    #         return unicode(key)
-    #
+    def _serialize_opaque_key(self, key):
+        if hasattr(key, 'to_deprecated_string'):
+            return key.to_deprecated_string()
+        else:
+            return unicode(key)
+    
     # def get_username(self, anonymous_user_id):
     #     """
     #     Return the username of the user associated with anonymous_user_id
