@@ -124,7 +124,7 @@ class MemoryGameXBlock(XBlock):
     @property
     def get_username(self):
         if self.get_user:
-            return self.getuser.username
+            return self.get_user.username
         else:
             return 'No user avalaible'
 
