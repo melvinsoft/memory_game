@@ -119,7 +119,7 @@ class MemoryGameXBlock(XBlock):
         Returns: the username if it can be identified. If the xblock service to converts to a real user
             fails, returns None and logs the error.
         """
-        if hasattr(self, "xmodule_runtime"):
+        if hasattr(self, "xmodule_runtime" and self.xmodule_runtime.anonymous_student_id):
             user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
             if user:
                 return user.username
