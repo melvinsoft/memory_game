@@ -111,7 +111,7 @@ class MemoryGameXBlock(XBlock):
         frag.initialize_js('MemoryGameXBlock')
         return frag
 
-    def studio_view(self, context):
+    def studio_view(self, context=None):
         """
         Editing view in Studio
         """

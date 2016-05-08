@@ -16,6 +16,14 @@ function MemoryGameEditXBlock(runtime, element, params) {
 
         var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
 
+        $.post(handlerUrl, JSON.stringify(data)).done(function (response) {
+            if (response.result === 'success') {
+                runtime.notify('save', { state: 'end' });
+            }
+            else {
+                runtime.notify('error', { msg: response.message });
+            }
+        });
 
     });
 
