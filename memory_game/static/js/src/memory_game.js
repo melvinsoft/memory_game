@@ -1,19 +1,19 @@
 /* Javascript for MemoryGameXBlock. */
 function MemoryGameXBlock(runtime, element) {
 
-    var incrementAttmsUrl = runtime.handlerUrl(element, 'increment_attempts');
+    var incrementFlipsUrl = runtime.handlerUrl(element, 'increment_flips');
     var userWinsUrl = runtime.handlerUrl(element, 'user_wins');
 
-    incrementAttempts = function() {
+    incrementFlips = function() {
         $.ajax({
             type: 'POST',
-            url: incrementAttmsUrl,
-            data: JSON.stringify({"increment_attms": "1"}),
+            url: incrementFlipsUrl,
+            data: JSON.stringify({"increment_flips": "1"}),
             success: function (result) {
-                $('.attempts_counter', element).text(result.attempts);
+                $('.flips_counter', element).text(result.flips);
             },
             error: function(){
-                alert("increment_attms error!");
+                alert("increment_flips error!");
             }
         });
     }
@@ -27,7 +27,7 @@ function MemoryGameXBlock(runtime, element) {
                 $('.win_status', element).text(result.win_status_msg);
             },
             error: function(){
-                alert("increment_attms error!");
+                alert("win error!");
             }
         });
     }

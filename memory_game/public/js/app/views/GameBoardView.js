@@ -57,7 +57,7 @@ define(function(require) {
 
                     } else {
 
-                        incrementAttempts();
+                        incrementFlips();
                         setTimeout(function() {
                             flippedCards[0].set("flipped", false);
                             flippedCards[1].set("flipped", false);

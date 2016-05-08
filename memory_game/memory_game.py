@@ -16,11 +16,7 @@ class MemoryGameXBlock(XBlock):
     # self.<fieldname>.
 
     # TO-DO: delete count, and define your own fields.
-    count = Integer(
-        default=0,
-        scope=Scope.user_state,
-        help="A simple counter, to show something happening",
-    )
+
 
     display_name = String(
         display_name="Display Name",
@@ -29,16 +25,16 @@ class MemoryGameXBlock(XBlock):
         help="This name appears in the horizontal navigation at the top of the page."
     )
 
-    attempts = Integer(
+    flips = Integer(
         default=0,
         scope=Scope.user_state,
-        help="Counter for the user attempts, if a max is setted, not could be greather than this value"
+        help="Counter for the user flips, if a max is setted, not could be greather than this value"
     )
 
-    max_attempts = Integer(
+    max_flips = Integer(
         default=0,
         scope=Scope.user_state,
-        help="Limit the maximum of attempts for the user, take care that not set it too low"
+        help="Limit the maximum of flips for the user, take care that not set it too low"
     )
 
     users_win_count = Integer(
@@ -144,27 +140,17 @@ class MemoryGameXBlock(XBlock):
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
-    @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
-        """
-        An example handler, which increments the data.
-        """
-        # Just to show data coming in...
-        assert data['hello'] == 'world'
-
-        self.count += 1
-        return {"count": self.count}
 
     @XBlock.json_handler
-    def increment_attempts(self, data, suffix=''):
+    def increment_flips(self, data, suffix=''):
         """
-        After fip two cart with no match, the attempts counter is incremented
+        After fip two cards with no match, the flips counter is incremented
         by this handler.
         """
 
-        if data['increment_attms'] == '1':
-            self.attempts += 1
-        return {"attempts": self.attempts}
+        if data['increment_flips'] == '1':
+            self.flips += 1
+        return {"flips": self.flips}
 
     @XBlock.json_handler
     def user_wins(self, data, suffix=''):
