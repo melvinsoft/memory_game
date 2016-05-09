@@ -23,7 +23,7 @@ class MemoryGameXBlock(XBlock):
 
     flips = Integer(
         default=0,
-        scope=Scope.user_state,
+        scope=Scope.settings,
         help="""
             Counter for the user flips, if a max is setted, not could be greather than this value
              """
