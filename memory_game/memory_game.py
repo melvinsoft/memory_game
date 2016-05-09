@@ -219,7 +219,7 @@ class MemoryGameXBlock(XBlock):
             # the student loose =(
             self.runtime.publish(
                 self, "grade", {
-                    'value': 0, 'max_value': 1.0
+                    'value': 0, 'max_value': self.weight
                 }
             )
             return {"win_status_msg": "YOU LOOSE!!!", "flips": self.flips}
@@ -239,7 +239,7 @@ class MemoryGameXBlock(XBlock):
         if not self.has_won:
             self.runtime.publish(
                 self, "grade", {
-                    'value': 1.0, 'max_value': 1.0
+                    'value': self.weight, 'max_value': self.weight
                 }
             )
             if self.get_user:
