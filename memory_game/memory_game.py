@@ -116,7 +116,7 @@ class MemoryGameXBlock(XBlock):
             if self.xmodule_runtime.anonymous_student_id:
                 user = self.xmodule_runtime.get_real_user(self._serialize_opaque_key(self.xmodule_runtime.anonymous_student_id))
                 if user:
-                    return user.username
+                    return user
         return False
 
     @property
