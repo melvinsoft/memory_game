@@ -15,7 +15,16 @@ The XBlock is based on the code of @poormansevo, He has developed and amazing
 memory cards game with jQuery, Backbone, underscore. I only integrated the code
 and made it work with the XBlock, connecting the events to ajax calls, and
 removing the includes of jQuery and underscore to avoid conflicts with the edX
-ones.
+ones. Also the original memory game, was with beer's pictures, and I changed for
+ animal icons (creative commons), because... is an educational game, you know.
+
+Thanks @poormansevo
+
+## Studio configurable settings
+For now, there is only three settings in Studio
+* Display Name
+* Max Flips
+* Weight
 
 ## Features
 * The game release grades. For now you can configure the weight of the XBlock in
@@ -28,9 +37,7 @@ implement partial grades.
 "Winner".
 
 
-
 ## Installation
-
 
 ### Ansible playbooks
 
@@ -70,3 +77,13 @@ Go to Settings -> Advanced Settings and set advanced_modules to ["memory_game"].
 
 Select Advanced -> Memory Game in your unit.
 ------------
+
+## Known problems
+The overall workflow is not really fancy, I need to invest more time in
+improve it.
+
+#### TO-DO
+* Test
+* Configurable images
+* Better grades
+* LMS attempts and max attempts integration
