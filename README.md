@@ -76,7 +76,7 @@ Go to Settings -> Advanced Settings and set advanced_modules to ["memory_game"].
 ## Use the XBlock in a unit
 
 Select Advanced -> Memory Game in your unit.
-------------
+
 
 ## Known problems
 The overall workflow is not really fancy, I need to invest more time in
