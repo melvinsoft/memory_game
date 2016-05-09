@@ -83,6 +83,9 @@ class MemoryGameXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def max_score(self):
+        return self.weight
+
     @property
     def get_max_flips(self):
         if self.max_flips == 0:
