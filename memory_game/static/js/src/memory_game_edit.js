@@ -8,6 +8,7 @@ function MemoryGameEditXBlock(runtime, element, params) {
 
         var data = {
             'display_name': $('#memory_game_edit_display_name').val(),
+            'max_flips': $('#memory_game_edit_max_flips').val(),
             'weight': $('#memory_game_edit_weight').val()
 
         };
