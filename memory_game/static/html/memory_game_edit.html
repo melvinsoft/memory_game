@@ -25,6 +25,16 @@
       <span class="tip setting-help">{{ help_texts.weight }}</span>
     </li>
 
+    <li class="field comp-setting-entry is-set images_set">
+      <span class="tip setting-help">{{ help_texts.images }}</span>
+        {% for k, img in self.images.items %}
+            <div class="wrapper-comp-setting">
+              <label class="label setting-label" for="memory_game_edit_image{{ forloop.counter }}">Image {{ forloop.counter }} URL</label>
+              <input class="input setting-input" id="memory_game_edit_image{{ forloop.counter }}" value="{{ img }}" type="text" />
+            </div>
+        {% endfor %}
+    </li>
+
   </ul>
 
   <div class="xblock-actions">

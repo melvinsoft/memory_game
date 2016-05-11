@@ -48,25 +48,12 @@ requirejs(['backbone', 'GameBoardView', 'CardView', 'CardSetCollection', 'GameMo
             if (gameBoardView) {
                 gameBoardView.destroy();
             }
-
-            var cardSetCollection = new CardSetCollection([
-                new CardModel({value: '1', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Creative-Tail-Animal-bat.svg/128px-Creative-Tail-Animal-bat.svg.png'}),
-                new CardModel({value: '1', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Creative-Tail-Animal-bat.svg/128px-Creative-Tail-Animal-bat.svg.png'}),
-                new CardModel({value: '2', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Creative-Tail-Animal-cow.svg'}),
-                new CardModel({value: '2', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/9/92/Creative-Tail-Animal-cow.svg'}),
-                new CardModel({value: '3', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Creative-Tail-Animal-cheetah.svg/128px-Creative-Tail-Animal-cheetah.svg.png'}),
-                new CardModel({value: '3', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Creative-Tail-Animal-cheetah.svg/128px-Creative-Tail-Animal-cheetah.svg.png'}),
-                new CardModel({value: '4', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Creative-Tail-Animal-horse.svg/128px-Creative-Tail-Animal-horse.svg.png'}),
-                new CardModel({value: '4', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Creative-Tail-Animal-horse.svg/128px-Creative-Tail-Animal-horse.svg.png'}),
-                new CardModel({value: '5', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Creative-Tail-Animal-panda.svg/128px-Creative-Tail-Animal-panda.svg.png'}),
-                new CardModel({value: '5', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Creative-Tail-Animal-panda.svg/128px-Creative-Tail-Animal-panda.svg.png'}),
-                new CardModel({value: '6', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Creative-Tail-Animal-snake.svg/128px-Creative-Tail-Animal-snake.svg.png'}),
-                new CardModel({value: '6', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Creative-Tail-Animal-snake.svg/128px-Creative-Tail-Animal-snake.svg.png'}),
-                new CardModel({value: '7', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Creative-Tail-Animal-fox.svg/128px-Creative-Tail-Animal-fox.svg.png'}),
-                new CardModel({value: '7', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Creative-Tail-Animal-fox.svg/128px-Creative-Tail-Animal-fox.svg.png'}),
-                new CardModel({value: '8', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Creative-Tail-Animal-spider.svg/128px-Creative-Tail-Animal-spider.svg.png'}),
-                new CardModel({value: '8', matched: false, imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Creative-Tail-Animal-spider.svg/128px-Creative-Tail-Animal-spider.svg.png'})
-            ]);
+            console.info(images_set);
+            var cardSetCollection = new CardSetCollection();
+            _.each(images_set, function(value, key){
+                cardSetCollection.add(new CardModel({value: key, matched: false, imagePath: value}));
+                cardSetCollection.add(new CardModel({value: key, matched: false, imagePath: value}));
+            });
 
             var gameModel = new GameModel({cardSet: cardSetCollection});
             var gameBoardView = new GameBoardView({model: gameModel});

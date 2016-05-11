@@ -1,11 +1,14 @@
 """TO-DO: Write a description of what this XBlock is."""
 
 import pkg_resources
+import json
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, Boolean, Float, String
+from xblock.fields import Scope, Integer, Boolean, Float, String, Dict
 from xblock.fragment import Fragment
 from django.template import Context, Template
+
+from .default_data import DEFAULT_IMAGES
 
 class MemoryGameXBlock(XBlock):
     """
@@ -19,6 +22,13 @@ class MemoryGameXBlock(XBlock):
         help="""This name appears in the horizontal navigation at the top of
                 the page.
              """
+    )
+
+    images = Dict(
+        display_name="Images set for game.",
+        default=DEFAULT_IMAGES,
+        scope=Scope.content,
+        help="Here you can define the eight images for the game."
     )
 
     flips = Integer(
@@ -163,6 +173,8 @@ class MemoryGameXBlock(XBlock):
             self.runtime.local_resource_url(
                 self, "public/css/main.css"))
         #
+        # this add the images dict to the js
+        frag.add_javascript("images_set=" + json.dumps(self.images));
         frag.add_javascript_url(
             self.runtime.local_resource_url(
                 self, "public/js/lib/require.js"))
@@ -202,6 +214,7 @@ class MemoryGameXBlock(XBlock):
         self.display_name = data['display_name']
         self.weight = data['weight']
         self.max_flips = data['max_flips']
+        self.images = data['images']
 
         return {
             'result': 'success',
