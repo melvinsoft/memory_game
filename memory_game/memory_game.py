@@ -27,7 +27,7 @@ class MemoryGameXBlock(XBlock):
     images = Dict(
         display_name="Images set for game.",
         default=DEFAULT_IMAGES,
-        scope=Scope.content,
+        scope=Scope.settings,
         help="Here you can define the eight images for the game."
     )
 
