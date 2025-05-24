@@ -1,5 +1,7 @@
 # Memory Game XBlock
 
+changes to rreadme
+
 ## Description
 This is an early prototype of and XBlock. Is a memory game, where the student
 needs to find the matches. Games are a good tool for courses, because they bring
